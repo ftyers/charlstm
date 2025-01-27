@@ -1,4 +1,5 @@
 # https://github.com/infiniteoverflow/Char-RNN/blob/master/Char-RNN.ipynb
+import sys
 import numpy as np
 import torch
 from torch import nn
@@ -187,8 +188,8 @@ def train(net, data, epochs=10, batch_size=10, seq_length=50, lr=0.001, clip=5, 
 
 
 if __name__=="__main__":
-    
-    with open('ud.txt','r') as f:
+    fn = sys.argv[1] 
+    with open(fn,'r') as f:
         text = f.read()
     
     
@@ -203,19 +204,19 @@ if __name__=="__main__":
     
     
     n_hidden = 512 
-    n_layers = 2
+    n_layers = 3
     
     net = CharLSTM(chars,n_hidden,n_layers)
     print(net)
     
-    batch_size = 256
+    batch_size = 512
     seq_length = 100
-    n_epochs = 40
+    n_epochs = 20
     
     train(net,encoded,epochs=n_epochs,batch_size=batch_size,seq_length=seq_length,lr=0.001,print_every=10)
     
     
-    model_name = 'rnn_20_epoch.net'
+    model_name = 'lstm-'+str(n_epochs)+'_epoch-'+fn+'.net'
     
     checkpoint = {
         'n_hidden':net.n_hidden,

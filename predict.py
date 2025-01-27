@@ -1,5 +1,6 @@
 # https://github.com/infiniteoverflow/Char-RNN/blob/master/Char-RNN.ipynb
 
+import sys 
 import numpy as np
 import torch
 from torch import nn
@@ -72,8 +73,8 @@ def sample(net, size, prime='The', top_k=None):
 if __name__=="__main__":
     
     # Here we have loaded in a model that trained over 20 epochs `rnn_20_epoch.net`
-    with open('rnn_20_epoch.net', 'rb') as f:
-        checkpoint = torch.load(f, map_location=torch.device('cpu'), weights_only=True)
+    with open(sys.argv[1], 'rb') as f:
+        checkpoint = torch.load(f, map_location=torch.device('cpu'))
         
     loaded = CharLSTM(checkpoint['tokens'], n_hidden=checkpoint['n_hidden'], n_layers=checkpoint['n_layers'])
     loaded.load_state_dict(checkpoint['state_dict'])
