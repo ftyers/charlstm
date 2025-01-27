@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Hello world!</title>
+</head>
+<body>
+<center>
+<p>
+Hello world!
+</p>
+<p>
+<input id="textBox" name="textBox"></input>
+</p>
+<p>
+<div id="outputBox" name="outputBox"/>
+</p>
+</center>
+</body>
+<script>
+var buf = "";
+var token = "";
+
+function onTextInput (e) {
+    e = e || window.event;
+    console.log(e.key)
+    if(e.key == " ") {
+        var url = "http://localhost:5000/token"
+        xmlhttp.open("POST", url, true);
+        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        var params = "token=" + token;
+        xmlhttp.send(params);
+        buf = buf + " " + token;
+        token = "";
+    } else { 
+        token += e.key;
+    }
+};
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == XMLHttpRequest.DONE) { 
+        if (xmlhttp.status == 200) {
+            document.getElementById("outputBox").innerHTML = xmlhttp.responseText;
+        }
+    }
+};
+textInputBox = document.getElementById("textBox");
+textInputBox.onkeypress = onTextInput;
+</script>
+
+</html>
