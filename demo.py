@@ -30,9 +30,9 @@ def charnum():
 if __name__ == '__main__':
 
     with open('rnn_20_epoch.net', 'rb') as f:
-        checkpoint = torch.load(f, map_location=torch.device('cpu'))
+        checkpoint = torch.load(f, map_location=torch.device('cpu'), weights_only=True)
         
-    model = CharRNN(checkpoint['tokens'], n_hidden=checkpoint['n_hidden'], n_layers=checkpoint['n_layers'])
+    model = CharLSTM(checkpoint['tokens'], n_hidden=checkpoint['n_hidden'], n_layers=checkpoint['n_layers'])
     model.load_state_dict(checkpoint['state_dict'])
 
     app.run()
