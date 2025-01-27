@@ -6,13 +6,13 @@ from torch import nn
 from torch.nn import functional as F
 import os
 
-from charnn import CharLSTM, one_hot_encode
+from charlstm import CharLSTM, one_hot_encode
 
 if(torch.cuda.is_available()):
-    print("GPU is present")
+#    print("GPU is present")
     gpu = True
 else:
-    print("No GPU Available")
+#    print("No GPU Available")
     gpu = False
 
 
@@ -73,7 +73,7 @@ if __name__=="__main__":
     
     # Here we have loaded in a model that trained over 20 epochs `rnn_20_epoch.net`
     with open('rnn_20_epoch.net', 'rb') as f:
-        checkpoint = torch.load(f, map_location=torch.device('cpu'))
+        checkpoint = torch.load(f, map_location=torch.device('cpu'), weights_only=True)
         
     loaded = CharLSTM(checkpoint['tokens'], n_hidden=checkpoint['n_hidden'], n_layers=checkpoint['n_layers'])
     loaded.load_state_dict(checkpoint['state_dict'])

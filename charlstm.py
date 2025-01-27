@@ -40,10 +40,10 @@ def get_batches(arr,batch_size,seq_length):
         yield x,y
 
 if(torch.cuda.is_available()):
-    print("GPU is present")
+#    print("GPU is present")
     gpu = True
 else:
-    print("No GPU Available")
+#    print("No GPU Available")
     gpu = False
 
 class CharLSTM(nn.Module):
