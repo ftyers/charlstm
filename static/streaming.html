@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Hello world!</title>
+</head>
+<body>
+<center>
+<p>
+Hello world!
+</p>
+<p>
+<input id="textBox" name="textBox"></input>
+</p>
+<p>
+<div id="outputBox" name="outputBox"/>
+</p>
+</center>
+</body>
+<script>
+
+const socket = new WebSocket("ws://localhost:5000/msg");
+console.log(socket)
+socket.onopen = (event) => {
+  console.log("Socket opened!");
+};
+
+socket.addEventListener("message", (event) => {
+  console.log("Message from server ", event.data);
+  document.getElementById("outputBox").innerHTML = event.data;
+});
+
+function onTextInput (e) {
+    e = e || window.event;
+    console.log(e.key)
+    socket.send(e.key);
+};
+textInputBox = document.getElementById("textBox");
+textInputBox.onkeypress = onTextInput;
+</script>
+
+</html>
