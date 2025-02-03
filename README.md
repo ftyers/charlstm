@@ -8,5 +8,5 @@ $ pip3 install torch torchvision torchaudio --index-url https://download.pytorch
 For streaming:
 
 ```
-$ pip3 install flask_sockets
+$ pip3 install flask-sock
 ```
