@@ -185,14 +185,15 @@ def train(net, data, epochs=10, batch_size=10, seq_length=50, lr=0.001, clip=5, 
                       "Step: {}...".format(counter),
                       "Loss: {:.4f}...".format(loss.item()),
                       "Val Loss: {:.4f}".format(np.mean(val_losses)))
+                sys.stdout.flush()
 
 
 if __name__=="__main__":
     fn = sys.argv[1] 
     with open(fn,'r') as f:
         text = f.read()
-    
-    
+
+    print(len(text))
     
     chars = tuple(set(text))
     
@@ -202,16 +203,16 @@ if __name__=="__main__":
     
     encoded = np.array([char2int[ch] for ch in text])
     
-    
     n_hidden = 512 
-    n_layers = 3
+    n_layers = 4
     
     net = CharLSTM(chars,n_hidden,n_layers)
     print(net)
+    sys.stdout.flush()
     
-    batch_size = 512
-    seq_length = 100
-    n_epochs = 20
+    batch_size = 256
+    seq_length = 50
+    n_epochs = 25
     
     train(net,encoded,epochs=n_epochs,batch_size=batch_size,seq_length=seq_length,lr=0.001,print_every=10)
     
